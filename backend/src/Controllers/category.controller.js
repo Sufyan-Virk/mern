@@ -5,11 +5,11 @@ import StatusCodes from "http-status-codes";
 
  export const createCategory = async (req, res, next) => {
   const {name} = req.body;
-  const insertedCategory = await Category.findOne({name: name});
+  let insertedCategory = await Category.findOne({name});
   if(insertedCategory){
     return next(new HTTPError('Same category exists', StatusCodes.CONFLICT))
   }
-  const category = new Category({name});
+  let category = new Category({name});
    await category.save();
   res.status(StatusCodes.CREATED).json(new HTTPResponse(category, 'Category added successfully'))
    

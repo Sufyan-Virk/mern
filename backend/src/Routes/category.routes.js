@@ -1,6 +1,6 @@
 import express from "express";
 import {catchAsyncErrors, validationCatches} from "../Middlewares/tryCatch.js";
-import validation from "../Middlewares/category.validation.js";
+import validation from "../Utils/category.validation.js";
 import {createCategory, getCategories, updateCategory} from "../Controllers/category.controller.js";
 
 const router =   express.Router();
