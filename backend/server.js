@@ -2,6 +2,8 @@ import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import xss from 'xss-clean';
+import mongoSanitize from 'express-mongo-sanitize';
 import routes from './src/Routes/index.js'
 
 dotenv.config();
@@ -11,6 +13,16 @@ const port = process.env.PORT || 4000;
 
 app.use(cors());
 app.use(express.json());
+
+// middleware for XSS attacks 
+app.use(xss())
+
+// to replace NoSQL Injection
+app.use(mongoSanitize({
+    replaceWith: '_',
+  }))
+  
+
 
 app.use("/api/", routes);
 

@@ -22,6 +22,11 @@ export const getCategories = async (req, res, next) => {
 
 export const updateCategory = async (req, res, next) => {
   let updatedCategory = await Category.findByIdAndUpdate(req.params.id, {name: req.body.name}, {new: true}).lean();
-  res.status(StatusCodes.ACCEPTED).send(new HTTPResponse(updatedCategory, 'Category updated successfully'));
+  res.status(StatusCodes.OK).send(new HTTPResponse(updatedCategory, 'Category updated successfully'));
+};
+
+export const deleteCategory = async (req, res, next) => {
+  let deletedCategory = await Category.findByIdAndDelete(req.params.id);
+  res.status(StatusCodes.OK).send(new HTTPResponse(deletedCategory, 'Category deleted successfully'));
 };
 
