@@ -1,45 +1,43 @@
-import dotenv from "dotenv";
+import dotenv from 'dotenv';
 import AWS from 'aws-sdk';
 dotenv.config();
 
-const SESSender = async (email, message, subject="User Sign up") => {
-    let sesParams = {
-        Destination: {
-          ToAddresses: [email]
+const SESSender = async (email, message, subject = 'User Sign up') => {
+  let sesParams = {
+    Destination: {
+      ToAddresses: [email],
+    },
+    Message: {
+      Body: {
+        Html: {
+          Charset: 'UTF-8',
+          Data: emailVerifyTemplateGenerator(message),
         },
-        Message: {  
-          Body: {    
-            Html: {
-              Charset: "UTF-8",
-              Data: emailVerifyTemplateGenerator(message)
-            }
-          },
-          Subject: {
-            Charset: 'UTF-8',
-            Data: subject
-          }
-        },
-        Source: process.env.AWS_SES_VERIFIED_EMAIL
-      };
+      },
+      Subject: {
+        Charset: 'UTF-8',
+        Data: subject,
+      },
+    },
+    Source: process.env.AWS_SES_VERIFIED_EMAIL,
+  };
 
-      var sendPromise = new AWS.SES({
-        apiVersion: '2010– 12– 01'
-      })
-      .sendEmail(sesParams)
-      .promise();
-    await sendPromise.then(
-        function (data) {
-          console.log('Email is sent');
-        })
-      .catch(
-        function (err) {
-          console.error(err, err.stack);
-          return err
-        });
-    
-}
+  var sendPromise = new AWS.SES({
+    apiVersion: '2010– 12– 01',
+  })
+    .sendEmail(sesParams)
+    .promise();
+  await sendPromise
+    .then(function (data) {
+      console.log('Email is sent');
+    })
+    .catch(function (err) {
+      console.error(err, err.stack);
+      return err;
+    });
+};
 
- const emailVerifyTemplateGenerator = (message) => `<!doctype html>
+const emailVerifyTemplateGenerator = (message) => `<!doctype html>
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -159,5 +157,4 @@ const SESSender = async (email, message, subject="User Sign up") => {
 </body>
 </html>`;
 
-// export emailVerifyTemplateGenerator;
-export default SESSender
+export default SESSender;

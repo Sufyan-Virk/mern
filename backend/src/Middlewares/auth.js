@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 export const protect = (req, res, next) => {
   const token = req.header('token');
   if (!token) {
-    res.status(401)
+    res.status(401);
     throw new Error('Access denied');
   }
   try {
@@ -11,6 +11,6 @@ export const protect = (req, res, next) => {
     req.loggedinUser = decoded;
     next();
   } catch (err) {
-    res.status(400).json({status: false, message:'User Session expired'});
+    res.status(400).json({ status: false, message: 'User Session expired' });
   }
 };
