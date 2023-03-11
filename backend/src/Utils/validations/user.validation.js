@@ -2,7 +2,7 @@ import * as yup from 'yup';
 
 export default {
   user(req, res, next) {
-    let schema = yup.object({
+    const schema = yup.object({
       name: yup.string().required('name is required'),
       email: yup
         .string()

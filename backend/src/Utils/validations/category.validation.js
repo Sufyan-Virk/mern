@@ -2,7 +2,7 @@ import * as yup from 'yup';
 
 export default {
   category(req, res, next) {
-    let schema = yup.object({
+    const schema = yup.object({
       name: yup.string().required('category name is required'),
     });
 

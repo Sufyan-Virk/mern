@@ -2,7 +2,7 @@ import * as yup from 'yup';
 import mongoose from 'mongoose';
 export default {
   car(req, res, next) {
-    let schema = yup.object({
+    const schema = yup.object({
       model: yup.string().required('model is required'),
       color: yup.string().required('color is requied'),
       make: yup.string().required('make is requred'),
